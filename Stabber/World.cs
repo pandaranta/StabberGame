@@ -11,9 +11,9 @@ namespace Stabber
         public int WorldId { get; set; }
         public string JsonWorld { get; set; }
 
-        public World(string jsonWorld)
+        public World()
         {
-            JsonWorld = jsonWorld;
+           
         }
     }
 }

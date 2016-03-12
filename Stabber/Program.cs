@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace Stabber
 {
     //Stabber main class.
-    class Game
+   public class Game
     {
         
         public Room[,] World;
@@ -64,7 +64,7 @@ namespace Stabber
 
             // Serialize:ing the gameboard and making an entity containing the string.
             string jsonWorld = JsonConvert.SerializeObject(game.World);
-            World dbWorld = new World(jsonWorld);
+            //World dbWorld = new World(jsonWorld);
 
             // Init two players from the queue.
             Player player = game.PlayerQueue.Dequeue();
@@ -76,7 +76,7 @@ namespace Stabber
 
             dbs.Statistics.Add(statsP1);
             dbs.Statistics.Add(statsP2);
-            dbw.Worlds.Add(dbWorld); 
+            //dbw.Worlds.Add(dbWorld); 
 
             db.SaveChanges();
             dbs.SaveChanges();

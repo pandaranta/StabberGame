@@ -7,9 +7,9 @@ using System.Data.Entity;
 
 namespace StabberServer
 {
-    class UserDBContext : DbContext
+    class UserDbContext : DbContext
     {
-        public UserDBContext() :base ("serverPlayersContext")
+        public UserDbContext() :base ("serverPlayersContext")
         {
             // when developing this is used to renew the database
            // Database.SetInitializer<PlayerDbContext>(new DropCreateDatabaseAlways<PlayerDbContext>());
