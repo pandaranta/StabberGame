@@ -1,4 +1,4 @@
-﻿(Request) Login<username><password>
+﻿(Request) DDO/1.0 LOGIN <username> <password>
 (RESPONSE)  DDO/1.0  LOGIN ACCEPTED <username> <password>
 (RESPONSE)  DDO/1.0  LOGIN REJECTED <username> DOES NOT EXIST
 (RESPONSE)  DDO/1.0  LOGIN REJECTED <username> WRONG PASSWORD
