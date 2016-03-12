@@ -21,7 +21,7 @@ namespace StabberServer
 		private static Socket listeningSocket = null;
 
 		const int BUFFERLENGTH = 100;
-		static string response = string.Empty;
+
 
 		static void Main(string[] args)
 		{
@@ -30,77 +30,145 @@ namespace StabberServer
 
 			socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 			listeningSocket.Listen(100);
-			Byte[] bufferIn = new Byte[BUFFERLENGTH];
 
 			while (true)
 			{
 				socket = listeningSocket.Accept();
-				socket.Receive(bufferIn);
-				Thread thread = new Thread(Verifing);
-				thread.Start(bufferIn);
+				Thread thread = new Thread(Verifying);
+				thread.Start(socket);
 			}
-
 		}
 
-		private static void Verifing(object requestIn)
+		private static void Verifying(object socketIn)
 		{
-			byte[] request = (byte[])requestIn;
-			string requestString = encoding.GetString(request);
-			String[] tokens = requestString.Split(' ');
-			if (tokens[0] != "DDO/1.0")
+			Socket socket = (Socket)socketIn;
+			Byte[] bufferIn = new Byte[BUFFERLENGTH];
+
+			while (true)
 			{
-				response = "DDO/1.0 ERROR Use DDO/1.0 protocol";
+				socket.Receive(bufferIn);
+				string response = string.Empty;
+				bool loggedIn = false;
+				string requestString = encoding.GetString(bufferIn);
+				String[] tokens = requestString.Split(' ');
+				if (tokens[0] != "DDO/1.0")
+				{
+					response = "DDO/1.0 ERROR Use DDO/1.0 protocol";
+				}
+				else
+				{
+					switch (tokens[1])
+					{
+						case "LOGIN":
+							{
+								PlayerDbContext playerDB = new PlayerDbContext();
+								var userName = tokens[2];
+
+								var password = tokens[3];
+								Player player = playerDB.Players.Where(p => p.PlayerName == userName).Single();
+								var responseLocal = string.Empty;
+								if (player != null)
+								{
+									if (player.Password == password)
+									{
+										responseLocal = $"DDO/1.0 LOGIN ACCEPTED";
+										loggedIn = true;
+									}
+									else
+									{
+										responseLocal = $"DDO/1.0 LOGIN REJECTED Wrong password";
+									}
+								}
+								else
+								{
+									responseLocal = $"DDO/1.0 LOGIN REJECTED Player doesnt exist.";
+								}
+							}
+							break;
+						case "MOVE":
+							if(loggedIn == false)
+							{
+								response = "DDO/1.0 LOGIN REJECTED";
+							}
+							else
+							{
+								
+								switch (tokens[2])
+								{
+									case ("Up"):
+										//do something with player
+										;
+										break;
+									case ("Down"):
+										//do something with player
+										;
+										break;
+									case ("Right"):
+										//do something with player
+										;
+										break;
+									case ("Left"):
+										//do something with player
+										;
+										break;
+									default:
+										break;
+								};
+							}			
+							break;
+						case "GETSTATE":; break;
+							
+						default: break;
+					}
+				}
+				Byte[] bufferOut = encoding.GetBytes(response);
+				socket.Send(bufferOut);
+			}
+		}
+
+		static string CheckLogIn(string[] tokens)
+		{
+			PlayerDbContext playerDB = new PlayerDbContext();
+			var userName = tokens[2];
+			
+			var password = tokens[3];
+			Player player = playerDB.Players.Where(p => p.PlayerName == userName).Single();
+			var responseLocal = string.Empty;
+			if(player != null)
+			{
+				if(player.Password == password)
+				{
+					responseLocal = $"DDO/1.0 LOGIN ACCEPTED";
+				}
+				else
+				{
+					responseLocal = $"DDO/1.0 LOGIN REJECTED Wrong password";
+				}
 			}
 			else
 			{
-				switch (tokens[1])
-				{
-					case "LOGIN":
-						CheckLogIn(tokens);
-						break;
-					case "MOVE":
-						switch (tokens[2])
-						{
-							case ("Up"):
-								;
-								break;
-							case ("Down"):
-								;
-								break;
-							default:
-								break;
-						};
-						break;
-					case "GETSTATE":; break;
-					default: break;
-				}
+				responseLocal = $"DDO/1.0 LOGIN REJECTED Player doesnt exist.";
 			}
-			Byte[] bufferOut = encoding.GetBytes(response);
-			socket.Send(bufferOut);
-		}
 
-		static void CheckLogIn(string[] tokens)
-		{
-			PlayerDbContext playerDB = new PlayerDbContext();
-
-			foreach (var item in playerDB.Players)
-			{
-				string username = item.PlayerName;
-				if (username == tokens[2])
-				{
-					string password = item.Password;
-					if (password == tokens[3])
-					{
-						response = $"DDO/1.0 LOGIN ACCEPTED {tokens[2]}";
-					}
-					else
-					{
-						response = $"DDO/1.0 LOGIN REJECTED {tokens[2]} wrong password";
-					}
-				}
-				else
-					response = $"DDO / 1.0  LOGIN REJECTED {tokens[2]} DOES NOT EXIST";
-			}
+			return responseLocal;
+			//foreach (var item in playerDB.Players)
+			//{
+			//	string username = item.PlayerName;
+			//	if (username == tokens[2])
+			//	{
+			//		string password = item.Password;
+			//		if (password == tokens[3])
+			//		{
+			//			response = $"DDO/1.0 LOGIN ACCEPTED {tokens[2]}";
+			//		}
+			//		else
+			//		{
+			//			response = $"DDO/1.0 LOGIN REJECTED {tokens[2]} wrong password";
+			//		}
+			//	}
+			//	else
+			//		response = $"DDO / 1.0  LOGIN REJECTED {tokens[2]} DOES NOT EXIST";
+			//}
 		}
 
 		//static Boolean ReceiveRequest(Socket socket, String opponent,

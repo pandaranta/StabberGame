@@ -25,7 +25,12 @@ namespace StabberClient
 		{
 			socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 			socket.Connect(remoteEndPoint);
-			string response = "DDO/1.0 LOGIN hej hej";
+			Console.WriteLine("Enter username: ");
+			string userName = Console.ReadLine();
+			Console.WriteLine("Enter password: ");
+			string password = Console.ReadLine();
+
+			string response = $"DDO/1.0 LOGIN {userName} {password} ";
 
 			Byte[] bufferOut = new Byte[bufferLength];
 			bufferOut = Encoding.Default.GetBytes(response);
@@ -34,6 +39,7 @@ namespace StabberClient
 			socket.Receive(bufferIn);
 			string messageIn = encoding.GetString(bufferIn);
 			Console.WriteLine("Recieved message: " + messageIn);
+			Console.ReadLine();
 			socket.Close();
 		}
 	}
