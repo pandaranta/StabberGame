@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace StabberServer
 {
-    class Player
+    class User
     {
-        public int PlayerId { get; set; }
-        public string PlayerName { get; set; }
+        public int UserId { get; set; }
+        public string UserName { get; set; }
         public string Password { get; set; }
 
     }

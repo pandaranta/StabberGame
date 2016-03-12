@@ -7,7 +7,7 @@ using System.Data.Entity;
 
 namespace Stabber
 {
-    class Statistic
+   public class Statistic
     {
         public int StatisticId { get; set; }        
         public int PlayerId { get; set; }

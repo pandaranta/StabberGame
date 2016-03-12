@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
+
 
 namespace StabberServer
 {
@@ -49,7 +48,7 @@ namespace StabberServer
 				socket.Receive(bufferIn);
 				string response = string.Empty;
 				bool loggedIn = false;
-				string requestString = encoding.GetString(bufferIn);
+				string requestString = encoding.GetString(bufferIn).TrimEnd('\0').Trim();
 				String[] tokens = requestString.Split(' ');
 				if (tokens[0] != "DDO/1.0")
 				{
@@ -61,11 +60,11 @@ namespace StabberServer
 					{
 						case "LOGIN":
 							{
-								PlayerDbContext playerDB = new PlayerDbContext();
+								UserDBContext playerDB = new UserDBContext();
 								var userName = tokens[2];
 
 								var password = tokens[3];
-								Player player = playerDB.Players.Where(p => p.PlayerName == userName).Single();
+								User player = playerDB.Users.Where(p => p.UserName == userName).Single();
 								var responseLocal = string.Empty;
 								if (player != null)
 								{
@@ -92,6 +91,7 @@ namespace StabberServer
 							}
 							else
 							{
+								
 								
 								switch (tokens[2])
 								{
@@ -128,11 +128,11 @@ namespace StabberServer
 
 		static string CheckLogIn(string[] tokens)
 		{
-			PlayerDbContext playerDB = new PlayerDbContext();
+			UserDBContext playerDB = new UserDBContext();
 			var userName = tokens[2];
 			
 			var password = tokens[3];
-			Player player = playerDB.Players.Where(p => p.PlayerName == userName).Single();
+			User player = playerDB.Users.Where(p => p.UserName == userName).Single();
 			var responseLocal = string.Empty;
 			if(player != null)
 			{
@@ -151,24 +151,6 @@ namespace StabberServer
 			}
 
 			return responseLocal;
-			//foreach (var item in playerDB.Players)
-			//{
-			//	string username = item.PlayerName;
-			//	if (username == tokens[2])
-			//	{
-			//		string password = item.Password;
-			//		if (password == tokens[3])
-			//		{
-			//			response = $"DDO/1.0 LOGIN ACCEPTED {tokens[2]}";
-			//		}
-			//		else
-			//		{
-			//			response = $"DDO/1.0 LOGIN REJECTED {tokens[2]} wrong password";
-			//		}
-			//	}
-			//	else
-			//		response = $"DDO / 1.0  LOGIN REJECTED {tokens[2]} DOES NOT EXIST";
-			//}
 		}
 
 		//static Boolean ReceiveRequest(Socket socket, String opponent,

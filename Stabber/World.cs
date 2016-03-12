@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Stabber
 {
-    class World
+   public class World
     {
         public int WorldId { get; set; }
         public string JsonWorld { get; set; }

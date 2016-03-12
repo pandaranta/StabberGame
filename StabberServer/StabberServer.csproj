@@ -52,10 +52,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Player.cs" />
+    <Compile Include="User.cs" />
     <Compile Include="PlayerDbContext.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Room.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -63,6 +64,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="DDO1.0.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Stabber\Stabber.csproj">
+      <Project>{9f0ca0e4-ebdf-4527-a38b-4ee04560f3d5}</Project>
+      <Name>Stabber</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

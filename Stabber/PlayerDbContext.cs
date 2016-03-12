@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Stabber
 {
     // Entity Framework context
-    class PlayerDbContext : DbContext
+   public class PlayerDbContext : DbContext
     {      
         
         public PlayerDbContext() : base("stabberPlayersContext")

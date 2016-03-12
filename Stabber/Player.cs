@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Stabber
 {
     // This class contains player information and some player related logic.
-    class Player
+    public class Player
     {
 
         public static Random random = new Random();

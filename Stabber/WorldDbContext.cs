@@ -8,7 +8,7 @@ using System.Data.Entity;
 namespace Stabber
 {
     // Entity framework context
-    class WorldDbContext : DbContext
+   public class WorldDbContext : DbContext
     {
         public WorldDbContext() : base("stabberWorldContext")
         {

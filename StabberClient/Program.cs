@@ -30,7 +30,7 @@ namespace StabberClient
 			Console.WriteLine("Enter password: ");
 			string password = Console.ReadLine();
 
-			string response = $"DDO/1.0 LOGIN {userName} {password} ";
+			string response = $"DDO/1.0 LOGIN {userName} {password}";
 
 			Byte[] bufferOut = new Byte[bufferLength];
 			bufferOut = Encoding.Default.GetBytes(response);

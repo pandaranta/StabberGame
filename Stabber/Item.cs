@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Stabber
 {
     // Items used by players in game.
-    abstract class Item
+   public abstract class Item
     {
         public string Name { get; set; }
 
@@ -20,7 +20,7 @@ namespace Stabber
     }
 
     // Items used by players in game.
-    class Gold : Item
+   public class Gold : Item
     {
         public int GoldId { get; set; }
 
@@ -33,7 +33,7 @@ namespace Stabber
     }
 
     // Items used by players in game.
-    class HealthPotion : Item
+  public class HealthPotion : Item
     {
         public int HealthPotionId { get; set; }
 

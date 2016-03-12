@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Stabber
 {
     // The individual rooms making up the game world.
-   public class Room
+    class Room
     {        
         public List<Item> Contents { get; set; }
         public static Random random = new Random();        
