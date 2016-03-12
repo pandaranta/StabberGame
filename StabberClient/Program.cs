@@ -8,13 +8,12 @@ using System.Threading.Tasks;
 
 namespace StabberClient
 {
-    class Program
-    {
+	class Program
+	{
 		const String IPADDRESS = "127.0.0.1";
 		//const String IPADDRESS = "10.56.5.232";
 		const Int32 PORT = 8001;
 		static IPAddress ipAddress = IPAddress.Parse(IPADDRESS);
-		//static IPEndPoint localEndPoint = new IPEndPoint(ipAddress, PORT);
 		static IPEndPoint remoteEndPoint = new IPEndPoint(ipAddress, PORT);
 		static UTF8Encoding encoding = new UTF8Encoding();
 		static Socket socket = null;
@@ -23,7 +22,7 @@ namespace StabberClient
 		static string response = string.Empty;
 
 		static void Main(string[] args)
-        {
+		{
 			socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 			socket.Connect(remoteEndPoint);
 			string response = "DDO/1.0 LOGIN hej hej";
