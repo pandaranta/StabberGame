@@ -24,11 +24,12 @@ namespace StabberServer
         const int BUFFERLENGTH = 100;
         static Room[,] world;
 
-        static WorldDbContext dbw = new WorldDbContext();
+		static WorldDbContext dbw;
 
         static void Main(string[] args)
         {
-            var dbworld = new World();
+			dbw = new WorldDbContext();
+			var dbworld = new World();
             dbw.Worlds.Add(dbworld);
             dbw.SaveChanges();
 
