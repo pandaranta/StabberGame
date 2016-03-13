@@ -12,9 +12,9 @@ namespace StabberServer
 {
     class Program
     {
-        const String IPADDRESS = "127.0.0.1";
+        const string IPADDRESS = "127.0.0.1";
         //const String IPADDRESS = "10.56.5.232";
-        const Int32 PORT = 8001;
+        const int PORT = 8001;
         static IPAddress ipAddress = IPAddress.Parse(IPADDRESS);
         static IPEndPoint localEndPoint = new IPEndPoint(ipAddress, PORT);
         static UTF8Encoding encoding = new UTF8Encoding();
@@ -41,12 +41,17 @@ namespace StabberServer
 
             socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             listeningSocket.Listen(100);
-
+            int i = 0;
             while (true)
             {
+                
+                Console.Clear();
+                Console.WriteLine($"Active connections: {i}");
+                Console.WriteLine("Waiting for client..");
                 socket = listeningSocket.Accept();
                 Thread thread = new Thread(Verifying);
                 thread.Start(socket);
+                i++;
             }
         }
         static void PersistWorldInDb()
@@ -77,7 +82,7 @@ namespace StabberServer
         private static void Verifying(object socketIn)
         {
             Socket socket = (Socket)socketIn;
-            Byte[] bufferIn = new Byte[BUFFERLENGTH];
+            byte[] bufferIn = new byte[BUFFERLENGTH];
 
             while (true)
             {
@@ -85,7 +90,7 @@ namespace StabberServer
                 string response = string.Empty;
                 bool loggedIn = false;
                 string requestString = encoding.GetString(bufferIn).TrimEnd('\0').Trim();
-                String[] tokens = requestString.Split(' ');
+                string[] tokens = requestString.Split(' ');
                 if (tokens[0] != "DDO/1.0")
                 {
                     response = "DDO/1.0 ERROR Use DDO/1.0 protocol";
@@ -158,7 +163,7 @@ namespace StabberServer
                         default: break;
                     }
                 }
-                Byte[] bufferOut = encoding.GetBytes(response);
+                byte[] bufferOut = encoding.GetBytes(response);
                 socket.Send(bufferOut);
             }
         }

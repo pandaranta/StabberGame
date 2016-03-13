@@ -64,10 +64,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\StabberServer\StabberServer.csproj">
-      <Project>{e58c2083-4cfe-42c3-ab57-6ffb7d483dc2}</Project>
-      <Name>StabberServer</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Stabber\Stabber.csproj">
       <Project>{9f0ca0e4-ebdf-4527-a38b-4ee04560f3d5}</Project>
       <Name>Stabber</Name>

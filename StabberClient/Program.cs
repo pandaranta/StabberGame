@@ -12,9 +12,9 @@ namespace StabberClient
 {
     class Program
     {
-        const String IPADDRESS = "127.0.0.1";
+        const string IPADDRESS = "127.0.0.1";
         //const String IPADDRESS = "10.56.5.232";
-        const Int32 PORT = 8001;
+        const int PORT = 8001;
         static IPAddress ipAddress = IPAddress.Parse(IPADDRESS);
         static IPEndPoint remoteEndPoint = new IPEndPoint(ipAddress, PORT);
         static UTF8Encoding encoding = new UTF8Encoding();
@@ -49,7 +49,7 @@ namespace StabberClient
         {
             string response = $"DDO/1.0 GETSTATE";
 
-            Byte[] bufferOut = new Byte[bufferLength];
+            byte[] bufferOut = new byte[bufferLength];
             bufferOut = Encoding.Default.GetBytes(response);
             socket.Send(bufferOut);
 
@@ -119,7 +119,7 @@ namespace StabberClient
 
                 string response = $"DDO/1.0 LOGIN {userName} {password}";
 
-                Byte[] bufferOut = new Byte[bufferLength];
+                byte[] bufferOut = new byte[bufferLength];
                 bufferOut = Encoding.Default.GetBytes(response);
                 socket.Send(bufferOut);
 
