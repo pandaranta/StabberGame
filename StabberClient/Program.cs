@@ -20,7 +20,6 @@ namespace StabberClient
         static UTF8Encoding encoding = new UTF8Encoding();
         static Socket socket = null;
         const int bufferLength = 100;
-        static byte[] bufferIn = new byte[100];
         static string response = string.Empty;
 
         static void Main(string[] args)
@@ -28,26 +27,17 @@ namespace StabberClient
             socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             socket.Connect(remoteEndPoint);
 
+
             Login();
             GetState();
 
-
-
-            //switch (tokens[1])
-            //{
-            //    case "LOGIN":; break;
-            //    case "SENDSTATE": var world = JsonConvert.DeserializeObject(tokens[2]); break;
-            //    default:
-            //        break;
-            //}
-            //Console.WriteLine("Recieved message: " + messageIn);
-            //Console.ReadLine();
-            //socket.Close();
+            
         }
 
         static void GetState()
         {
             string response = $"DDO/1.0 GETSTATE";
+            byte[] bufferIn = new byte[100];
 
             byte[] bufferOut = new byte[bufferLength];
             bufferOut = Encoding.Default.GetBytes(response);
@@ -107,6 +97,8 @@ namespace StabberClient
         {
             bool isLoggedin = false;
             string message = string.Empty;
+            byte[] bufferIn = new byte[100];
+
 
             while (!isLoggedin)
             {
